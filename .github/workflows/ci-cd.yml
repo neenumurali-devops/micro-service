@@ -41,13 +41,23 @@ jobs:
           args: >
             -Dsonar.projectKey=payment-frontend
 
+
+      - name: Install Trivy
+  	    run: |
+    	   sudo apt-get update
+    	   sudo apt-get install -y wget
+    	   wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.67.2_Linux-64bit.deb
+    	   sudo dpkg -i trivy_0.67.2_Linux-64bit.deb
+
+      - name: Verify Trivy
+        run: trivy --version
+
       - name: Trivy Filesystem Scan
-        uses: aquasecurity/trivy-action@0.36.0
-        with:
-          scan-type: fs
-          scan-ref: .
-          format: table
-          severity: HIGH,CRITICAL
+  	    run: |
+    	   trivy fs . \
+           --severity HIGH,CRITICAL \
+           --format table \
+           --exit-code 0
             
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -72,32 +82,36 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest nginx
 
       - name: Trivy Scan - Auth Service
-        uses: aquasecurity/trivy-action@0.36.0
-        with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:latest
-          format: table
-          severity: HIGH,CRITICAL
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --format table \
+            --exit-code 0 \
+            ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:latest
 
       - name: Trivy Scan - Payment Service
-        uses: aquasecurity/trivy-action@0.36.0
-        with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/payment-service:latest
-          format: table
-          severity: HIGH,CRITICAL
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --format table \
+            --exit-code 0 \
+            ${{ secrets.DOCKERHUB_USERNAME }}/payment-service:latest
 
       - name: Trivy Scan - Frontend
-        uses: aquasecurity/trivy-action@0.36.0
-        with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
-          format: table
-          severity: HIGH,CRITICAL
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --format table \
+            --exit-code 0 \
+            ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
 
       - name: Trivy Scan - Nginx
-        uses: aquasecurity/trivy-action@0.36.0
-        with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
-          format: table
-          severity: HIGH,CRITICAL
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --format table \
+            --exit-code 0 \
+            ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
 
       - name: Push Images
         run: |
