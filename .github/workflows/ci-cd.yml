@@ -1,0 +1,45 @@
+name: Microservice CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Auth Service
+        run: |
+          docker build -t neenumurali-devops/auth-service:latest backend/auth_service
+
+      - name: Build Payment Service
+        run: |
+          docker build -t neenumurali-devops/payment-service:latest backend/payment_service
+
+      - name: Build Frontend
+        run: |
+          docker build -t neenumurali-devops/frontend:latest frontend
+
+      - name: Build Nginx
+        run: |
+          docker build -t neenumurali-devops/nginx:latest nginx
+
+      - name: Push Images
+        run: |
+          docker push neenumurali-devops/auth-service:latest
+          docker push neenumurali-devops/payment-service:latest
+          docker push neenumurali-devops/frontend:latest
+          docker push neenumurali-devops/nginx:latest
