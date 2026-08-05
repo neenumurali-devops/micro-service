@@ -68,4 +68,4 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/payment-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/nginx:lates
