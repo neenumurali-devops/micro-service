@@ -24,7 +24,7 @@ jobs:
       - name: SonarQube Scan - Backend
         uses: SonarSource/sonarqube-scan-action@v5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
+          SONAR_TOKEN: ${{ secrets.PAYMENT_BACKEND }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           projectBaseDir: backend
@@ -34,7 +34,7 @@ jobs:
       - name: SonarQube Scan - Frontend
         uses: SonarSource/sonarqube-scan-action@v5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
+          SONAR_TOKEN: ${{ secrets.PAYMENT_BACKEND }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           projectBaseDir: frontend
@@ -69,3 +69,4 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/payment-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
+:wq]
