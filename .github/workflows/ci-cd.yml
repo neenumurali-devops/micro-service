@@ -127,7 +127,8 @@ jobs:
 
             cd /home/ec2-user/micro-service
 
-            git pull origin master
+            git fetch origin
+            git reset --hard origin/master
 
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
