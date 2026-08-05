@@ -23,23 +23,23 @@ jobs:
 
       - name: Build Auth Service
         run: |
-          docker build -t neenumurali-devops/auth-service:latest backend/auth_service
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:latest backend/auth_service
 
       - name: Build Payment Service
         run: |
-          docker build -t neenumurali-devops/payment-service:latest backend/payment_service
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/payment-service:latest backend/payment_service
 
       - name: Build Frontend
         run: |
-          docker build -t neenumurali-devops/frontend:latest frontend
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest frontend
 
       - name: Build Nginx
         run: |
-          docker build -t neenumurali-devops/nginx:latest nginx
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest nginx
 
       - name: Push Images
         run: |
-          docker push neenumurali-devops/auth-service:latest
-          docker push neenumurali-devops/payment-service:latest
-          docker push neenumurali-devops/frontend:latest
-          docker push neenumurali-devops/nginx:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/payment-service:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/nginx:latest
