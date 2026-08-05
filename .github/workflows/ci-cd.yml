@@ -50,13 +50,13 @@ jobs:
 
       - name: Verify Trivy
         run: trivy --version
-  
+
       - name: Trivy Filesystem Scan
-  	    run: |
-    	   trivy fs . \
-           --severity HIGH,CRITICAL \
-           --format table \
-           --exit-code 0
+        run: |
+          trivy fs . \
+            --severity HIGH,CRITICAL \
+            --format table \
+            --exit-code 0
             
       - name: Login to DockerHub
         uses: docker/login-action@v3
