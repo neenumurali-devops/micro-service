@@ -12,7 +12,7 @@ services:
       - app-network
 
   auth-service:
-    image: neenumurali-devops/auth-service:latest
+    image: neenumurali33/auth-service:latest
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/payment_app
       - JWT_SECRET=your-secret-key
@@ -30,7 +30,7 @@ services:
       - app-network
 
   payment-service:
-    image: neenumurali-devops/payment-service:latest
+    image: neenumurali33/payment-service:latest
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/payment_app
       - ELASTICSEARCH_HOST=elasticsearch
@@ -50,7 +50,7 @@ services:
       - app-network
 
   frontend:
-    image: neenumurali-devops/frontend:latest
+    image: neenumurali33/frontend:latest
     ports:
       - "4200:80"
     depends_on:
@@ -60,7 +60,7 @@ services:
       - app-network
 
   nginx:
-    image: neenumurali-devops/nginx:latest
+    image: neenumurali33/nginx:latest
     ports:
       - "80:80"
     depends_on:
